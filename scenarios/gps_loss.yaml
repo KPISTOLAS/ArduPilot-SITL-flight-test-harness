@@ -1,0 +1,36 @@
+name: gps_loss_after_wp2
+vehicle: copter
+speedup: 1
+takeoff_alt_m: 10
+timeout_s: 240
+use_auto: false
+
+params:
+  FS_GPS_ENABLE: 1
+  ARMING_CHECK: 0
+  FS_GCS_ENABLE: 0
+  FS_THR_ENABLE: 0
+
+waypoints_ned_m:
+  - {north: 30, east: 0, alt: 10}
+  - {north: 30, east: 30, alt: 10}
+  - {north: 0, east: 30, alt: 10}
+
+faults:
+  - after_wp: 2
+    set:
+      SIM_GPS_DISABLE: 1
+    # If your firmware maps GPS loss → RTL, assert it:
+    expect_mode: RTL
+    # Set block: true to sleep duration_s then clear the fault in-runner
+    duration_s: 15
+    block: false
+
+end: RTL
+
+expect:
+  wp_radius_m: 6
+  # Older SITL may land/brake instead of a clean RTL after GPS loss.
+  final_mode: RTL
+  final_modes: [RTL, LAND, BRAKE, SMART_RTL, LOITER]
+  mode_timeout_s: 30

@@ -1,0 +1,14 @@
+# Core
+# NOTE: keep a recent pymavlink; harness/compat.py patches set_mode_apm so
+# dronekit-sitl Copter 3.3 still accepts GUIDED/RTL mode changes.
+pymavlink>=2.4.41
+dronekit>=2.9.2
+dronekit-sitl>=3.3.0
+future>=0.18.0
+PyYAML>=6.0
+matplotlib>=3.7.0
+psutil>=5.9.0
+
+# Tests / reporting
+pytest>=7.0
+pytest-timeout>=2.1.0

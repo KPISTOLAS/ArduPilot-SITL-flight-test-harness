@@ -1,0 +1,29 @@
+name: basic_square
+vehicle: copter
+speedup: 1
+takeoff_alt_m: 10
+timeout_s: 240
+use_auto: false
+
+# Optional ArduPilot params applied before arming
+# Old dronekit-sitl (Copter 3.3) is harsh about GCS/throttle failsafes over plain TCP.
+params:
+  ARMING_CHECK: 0
+  FS_GCS_ENABLE: 0
+  FS_THR_ENABLE: 0
+
+# Relative offsets in meters from home (converted to lat/lon at runtime)
+waypoints_ned_m:
+  - {north: 40, east: 0, alt: 10}
+  - {north: 40, east: 40, alt: 10}
+  - {north: 0, east: 40, alt: 10}
+  - {north: 0, east: 0, alt: 10}
+
+end: RTL
+
+expect:
+  wp_radius_m: 5
+  # Accept RTL or LAND — old SITL may land instead of a clean RTL
+  final_mode: RTL
+  final_modes: [RTL, LAND]
+  mode_timeout_s: 30
